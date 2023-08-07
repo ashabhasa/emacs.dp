@@ -20,7 +20,8 @@
 
 (global-set-key (kbd "M-j") 'join-lines)
 
-
+;; disable vertical line indicator
+(add-hook 'prog-mode-hook (lambda () (global-display-fill-column-indicator-mode  -1)))
 ;; bind M-? to x-find-ref
 (global-set-key (kbd "M-?") #'xref-find-references)
 
