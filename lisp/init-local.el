@@ -233,5 +233,13 @@
   (global-set-key (kbd "M-g f") 'avy-goto-line)
   (global-set-key (kbd "M-g w") 'avy-goto-word-1))
 
+;; add treesitter support
+;; (setq treesit-language-source-alist)
+(setq treesit-language-source-alist
+      '((elixir "https://github.com/elixir-lang/tree-sitter-elixir")
+        (heex "https://github.com/phoenixframework/tree-sitter-heex.git")
+        )
+      )
+(package-install 'elixir-ts-mode)
 (provide 'init-local)
  ;;; init-local.el ends here
