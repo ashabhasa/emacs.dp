@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Inspect label
+# key: il
+# group: elixir-mode
+# --
+|> IO.inspect(label: "${some-label}")

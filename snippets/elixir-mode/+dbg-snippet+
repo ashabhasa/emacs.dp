@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Debug
+# key: d
+# group: elixir-mode
+# --
+|> dbg()
