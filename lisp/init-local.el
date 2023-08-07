@@ -22,6 +22,10 @@
 
 ;; disable vertical line indicator
 (add-hook 'prog-mode-hook (lambda () (global-display-fill-column-indicator-mode  -1)))
+
+;; enable origami folding
+(add-hook 'prog-mode-hook 'origami-mode)
+
 ;; bind M-? to x-find-ref
 (global-set-key (kbd "M-?") #'xref-find-references)
 
