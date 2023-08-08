@@ -4,24 +4,18 @@
  ;;; Fonts setup:
 
 
-;; (set-face-attribute 'default nil
-;; :family "PragmataPro"
-;; :height 175
-;; :weight 'regular)
+(set-face-attribute 'default nil
+                    :family "PragmataPro Mono"
+                    :height 140
+                    :weight 'regular)
 
-;; (set-face-attribute 'fixed-pitch nil
-;; :family "PragmataPro"
-;; :height 175
-;; :weight 'regular)
 
-(set-face-attribute 'default nil :height 143)
+
+;; (set-face-attribute 'default nil :height 143)
 
 (global-set-key (kbd "M-w") 'easy-kill)
 
 (global-set-key (kbd "M-j") 'join-lines)
-
-;; disable vertical line indicator
-(add-hook 'prog-mode-hook (lambda () (global-display-fill-column-indicator-mode  -1)))
 
 ;; enable origami folding
 (add-hook 'prog-mode-hook 'origami-mode)
