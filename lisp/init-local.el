@@ -14,7 +14,7 @@
 ;; :height 175
 ;; :weight 'regular)
 
-(set-face-attribute 'default nil :height 140)
+(set-face-attribute 'default nil :height 143)
 
 (global-set-key (kbd "M-w") 'easy-kill)
 
@@ -82,12 +82,15 @@
 (setq org-bullets-bullet-list '("•"))
 (require-package 'easy-kill)
 (cua-mode -1)
+
 ;; Use easy-kill in place of kill-ring-save
 (global-set-key [remap kill-ring-save] 'easy-kill)
 (global-set-key [remap whole-line-or-region-kill-ring-save] 'easy-kill)
+
 ;; Use easy-mark in place of mark-sexp
 (global-set-key [remap mark-sexp] 'easy-mark)
 (global-set-key [remap counsel-apropos] 'apropos-command)
+
 (setq create-lockfiles nil)
 (defun join-lines (n)
   "Join N lines."
@@ -98,6 +101,7 @@
     (dotimes (_ (abs n))
       (delete-indentation (natnump n)))))
 (global-set-key (kbd "C-^") 'join-lines)
+
 ;; Enable silver searcher for fast search
 (require-package 'ag)
 
@@ -234,12 +238,37 @@
   (global-set-key (kbd "M-g w") 'avy-goto-word-1))
 
 ;; add treesitter support
-;; (setq treesit-language-source-alist)
 (setq treesit-language-source-alist
       '((elixir "https://github.com/elixir-lang/tree-sitter-elixir")
-        (heex "https://github.com/phoenixframework/tree-sitter-heex.git")
-        )
+        (heex "https://github.com/phoenixframework/tree-sitter-heex.git"))
       )
-(package-install 'elixir-ts-mode)
+
+
+;; use tree sitter
+
+;; (setq major-mode-remap-alist
+;;       '((elixir-mode . elixir-ts-mode)
+;;         (heex-mode . heex-ts-mode)))
+;; (add-to-list 'major-mode-remap-alist '((elixir-mode . elixir-ts-mode)
+;;                                        (heex-mode . heex-ts-mode)))
+
+;; yas
+(unless (package-installed-p 'yasnippet)
+  (package-install 'yasnippet))
+
+(unless (package-installed-p 'yasnippet-snippets)
+  (package-install 'yasnippet-snippets)
+  (maybe-require-package 'yasnippet-snippets))
+
+(when (maybe-require-package 'yasnippet)
+  (add-hook 'prog-mode #'yas-minor-mode)
+  (add-hook 'conf-mode #'yas-minor-mode)
+  (add-hook 'text-mode #'yas-minor-mode)
+  (add-hook 'elixir-ts-mode #'yas-minor-mode)
+  (add-hook 'elixir-mode #'yas-minor-mode)
+  (add-hook 'snippet-mode #'yas-minor-mode)
+  (require-package 'yasnippet-snippets)
+  )
+
 (provide 'init-local)
  ;;; init-local.el ends here

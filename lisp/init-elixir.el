@@ -4,34 +4,34 @@
 
 (require 'eglot)
 
-(unless (package-installed-p 'elixir-mode)
-  (package-install 'elixir-mode))
 
-(display-fill-column-indicator-mode -1)
+;; (unless (package-installed-p 'elixir-mode)
+;;   (package-install 'elixir-mode))
+
+
+;;; Code: install heex-ts-mode and elixir-ts-mode
+(unless (package-installed-p 'heex-ts-mode)
+  (package-install 'heex-ts-mode)
+  )
+
+(unless (package-installed-p 'elixir-ts-mode)
+  (package-install 'elixir-ts-mode)
+  )
+
 ;; This is optional. It automatically runs `M-x eglot` for you whenever you are in `elixir-mode`
-(add-hook 'elixir-mode-hook 'eglot-ensure)
-(add-to-list 'eglot-server-programs '(elixir-mode  "~/dev/elixir/elixir-ls-gh/release_04_07_2023/language_server.sh"))
+;; (add-hook 'elixir-mode-hook 'eglot-ensure)
+(add-hook 'elixir-ts-mode-hook 'eglot-ensure)
+
+
+;; (add-to-list 'eglot-server-programs '(elixir-mode  "~/dev/elixir/elixir-ls-gh/release_08_08_2023/language_server.sh"))
+
+(add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_08_08_2023/language_server.sh"))
 
 (unless (package-installed-p 'exunit)
   (package-install 'exunit))
 
 (when (maybe-require-package 'exunit)
-  (add-hook 'elixir-mode-hook 'exunit-mode))
-
-(unless (package-installed-p 'yasnippet)
-  (package-install 'yasnippet))
-
-(unless (package-installed-p 'yasnippet-snippets)
-  (package-install 'yasnippet-snippets)
-  (maybe-require-package 'yasnippet-snippets))
-
-(when (maybe-require-package 'yasnipet)
-  (add-hook 'prog-mode 'yas-minor-mode)
-  (add-hook 'conf-mode 'yas-minor-mode)
-  (add-hook 'text-mode 'yas-minor-mode)
-  (add-hook 'snippet-mode 'yas-minor-mode)
-  (require-package 'yasnippet-snippets)
-  )
+  (add-hook 'elixir-ts-mode-hook 'exunit-mode))
 
 
 ;; run mox test from emacs
@@ -59,9 +59,13 @@
   (interactive)
   (my/mix-run-test t))
 
-(with-eval-after-load 'elixir-mode
-  (define-key elixir-mode-map (kbd "C-c C-f") 'elixir-format)
-  (define-key elixir-mode-map (kbd "C-c C-t") 'my/mix-run-test-at-point))
+;; (with-eval-after-load 'elixir-mode
+;;   (define-key elixir-mode-map (kbd "C-c C-f") 'elixir-format)
+;;   (defi ne-key elixir-mode-map (kbd "C-c C-t") 'my/mix-run-test-at-point))
+
+(with-eval-after-load 'elixir-ts-mode
+  (define-key elixir-ts-mode-map (kbd "C-c C-t") 'my/mix-run-test-at-point)
+  (define-key elixir-ts-mode-map (kbd "C-c C-f") 'elixir-format)  )
 
 
 (provide 'init-elixir)
