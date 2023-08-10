@@ -6,7 +6,7 @@
 
 (set-face-attribute 'default nil
                     :family "PragmataPro Mono"
-                    :height 140
+                    :height 150
                     :weight 'regular)
 
 
@@ -240,11 +240,9 @@
 
 ;; use tree sitter
 
-;; (setq major-mode-remap-alist
-;;       '((elixir-mode . elixir-ts-mode)
-;;         (heex-mode . heex-ts-mode)))
-;; (add-to-list 'major-mode-remap-alist '((elixir-mode . elixir-ts-mode)
-;;                                        (heex-mode . heex-ts-mode)))
+(setq major-mode-remap-alist
+      '((elixir-mode . elixir-ts-mode)
+        (heex-mode . heex-ts-mode)))
 
 ;; yas
 (unless (package-installed-p 'yasnippet)
@@ -263,6 +261,14 @@
   (add-hook 'snippet-mode #'yas-minor-mode)
   (require-package 'yasnippet-snippets)
   )
+
+;; configure dumb-jump
+;; (require-package 'dumb-jump)
+;; (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+;; (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
+(when (maybe-require-package 'dumb-jump)
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
 
 (provide 'init-local)
  ;;; init-local.el ends here

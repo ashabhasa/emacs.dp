@@ -4,9 +4,9 @@
 
 (require 'eglot)
 
-
-;; (unless (package-installed-p 'elixir-mode)
-;;   (package-install 'elixir-mode))
+;;; I need this only for elixir-format
+(unless (package-installed-p 'elixir-mode)
+  (package-install 'elixir-mode))
 
 
 ;;; Code: install heex-ts-mode and elixir-ts-mode
