@@ -18,7 +18,7 @@
 (global-set-key (kbd "M-j") 'join-lines)
 
 ;; enable origami folding
-(add-hook 'prog-mode-hook 'origami-mode)
+;; (add-hook 'prog-mode-hook 'origami-mode)
 
 ;; bind M-? to x-find-ref
 (global-set-key (kbd "M-?") #'xref-find-references)
@@ -70,6 +70,7 @@
   (interactive)
   (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
 (global-set-key (kbd "C-;") 'toggle-comment-on-line)
+
 ;; org mode
 (require-package 'org-bullets)
 (add-hook 'org-mode-hook 'org-bullets-mode)
@@ -222,7 +223,7 @@
                 (when (y-or-n-p (format "file no exist: 「%s」. Create?" $path))
                   (find-file $path ))))))))))
 
-(global-set-key (kbd "C-c f")  #'arber/open-file-at-cursor)
+;; (global-set-key (kbd "C-c f")  #'arber/open-file-at-cursor)
 
 
 (when (maybe-require-package 'avy)
@@ -231,18 +232,8 @@
   (global-set-key (kbd "M-g f") 'avy-goto-line)
   (global-set-key (kbd "M-g w") 'avy-goto-word-1))
 
-;; add treesitter support
-(setq treesit-language-source-alist
-      '((elixir "https://github.com/elixir-lang/tree-sitter-elixir")
-        (heex "https://github.com/phoenixframework/tree-sitter-heex.git"))
-      )
 
 
-;; use tree sitter
-
-(setq major-mode-remap-alist
-      '((elixir-mode . elixir-ts-mode)
-        (heex-mode . heex-ts-mode)))
 
 ;; yas
 (unless (package-installed-p 'yasnippet)
@@ -256,8 +247,6 @@
   (add-hook 'prog-mode #'yas-minor-mode)
   (add-hook 'conf-mode #'yas-minor-mode)
   (add-hook 'text-mode #'yas-minor-mode)
-  (add-hook 'elixir-ts-mode #'yas-minor-mode)
-  (add-hook 'elixir-mode #'yas-minor-mode)
   (add-hook 'snippet-mode #'yas-minor-mode)
   (require-package 'yasnippet-snippets)
   )
@@ -269,6 +258,9 @@
 (when (maybe-require-package 'dumb-jump)
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
+
+;; (add-hook 'elixir-ts-mode-hook (lambda () (setq-local corfu-local nil)))
+;; (add-hook 'elixir-mode-hook (lambda () (setq-local corfu-local nil)))
 
 (provide 'init-local)
  ;;; init-local.el ends here

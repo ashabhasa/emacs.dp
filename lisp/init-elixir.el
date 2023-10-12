@@ -4,7 +4,7 @@
 
 (require 'eglot)
 
-;;; I need this only for elixir-format
+;;; Code: I need this only for elixir-format
 (unless (package-installed-p 'elixir-mode)
   (package-install 'elixir-mode))
 
@@ -22,10 +22,16 @@
 ;; (add-hook 'elixir-mode-hook 'eglot-ensure)
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
 
+(when (maybe-require-package 'yasnippet)
+  (add-hook 'elixir-mode-hook #'yas-minor-mode)
+  (add-hook 'elixir-ts-mode #'yas-minor-mode)
+  (add-hook 'elixir-mode #'yas-minor-mode)
+  )
 
-;; (add-to-list 'eglot-server-programs '(elixir-mode  "~/dev/elixir/elixir-ls-gh/release_08_08_2023/language_server.sh"))
 
-(add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_08_08_2023/language_server.sh"))
+;; (add-to-list 'eglot-server-programs '(elixir-mode  "~/dev/elixir/elixir-ls-gh/release_25_09_2023/language_server.sh"))
+
+(add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_25_09_2023/language_server.sh"))
 
 (unless (package-installed-p 'exunit)
   (package-install 'exunit))
@@ -33,6 +39,21 @@
 (when (maybe-require-package 'exunit)
   (add-hook 'elixir-ts-mode-hook 'exunit-mode))
 
+;; (when (maybe-require-package 'exunit)
+;; (add-hook 'elixir-mode-hook 'exunit-mode))
+
+
+;; use tree sitter
+(setq major-mode-remap-alist
+      '((elixir-mode . elixir-ts-mode)
+        (heex-mode . heex-ts-mode)))
+
+
+;; add treesitter support
+;; (setq treesit-language-source-alist
+;;       '((elixir "https://github.com/elixir-lang/tree-sitter-elixir")
+;;         (heex "https://github.com/phoenixframework/tree-sitter-heex.git"))
+;;       )
 
 ;; run mox test from emacs
 ;; copied from https://dev.to/erickgnavar/minimal-setup-for-elixir-development-in-emacs-5k4
@@ -61,12 +82,14 @@
 
 ;; (with-eval-after-load 'elixir-mode
 ;;   (define-key elixir-mode-map (kbd "C-c C-f") 'elixir-format)
-;;   (defi ne-key elixir-mode-map (kbd "C-c C-t") 'my/mix-run-test-at-point))
+;;   (define-key elixir-mode-map (kbd "C-c C-t") 'my/mix-run-test-at-point))
 
 (with-eval-after-load 'elixir-ts-mode
   (define-key elixir-ts-mode-map (kbd "C-c C-t") 'my/mix-run-test-at-point)
   (define-key elixir-ts-mode-map (kbd "C-c C-f") 'elixir-format)  )
 
+;; (add-hook 'elixir-ts-mode #'(lambda () (if (bound-and-true-p elixir-ts-mode) (global-corfu-mode -1) (global-corfu-mode 1))))
+;; (add-hook 'elixir-mode #'(lambda () (if (bound-and-true-p elixir-ts-mode) (global-corfu-mode -1) (global-corfu-mode 1))))
 
 (provide 'init-elixir)
  ;;; init-elixir.el ends here

@@ -81,9 +81,9 @@
 (require 'init-whitespace)
 
 (require 'init-vc)
-(require 'init-darcs)
+;; (require 'init-darcs)
 (require 'init-git)
-(require 'init-github)
+;; (require 'init-github)
 
 (require 'init-projectile)
 
@@ -95,29 +95,29 @@
 (require 'init-erlang)
 (require 'init-elixir)
 (require 'init-javascript)
-(require 'init-php)
+;; (require 'init-php)
 (require 'init-org)
 (require 'init-nxml)
 (require 'init-html)
 (require 'init-css)
-(require 'init-haml)
-(require 'init-http)
-(require 'init-python)
-(require 'init-haskell)
+;; (require 'init-haml)
+;; (require 'init-http)
+;; (require 'init-python)
+;; (require 'init-haskell)
 ;; (require 'init-elm)
 ;; (require 'init-purescript)
 ;; (require 'init-ruby)
 ;; (require 'init-rails)
 (require 'init-sql)
 (require 'init-ocaml)
-(require 'init-j)
-(require 'init-nim)
-(require 'init-rust)
-(require 'init-toml)
+;; (require 'init-j)
+;; (require 'init-nim)
+;; (require 'init-rust)
+;; (require 'init-toml)
 (require 'init-yaml)
 (require 'init-docker)
 (require 'init-terraform)
-(require 'init-nix)
+;; (require 'init-nix)
 (maybe-require-package 'nginx-mode)
 (maybe-require-package 'just-mode)
 (maybe-require-package 'justl)
@@ -134,8 +134,9 @@
 
 (require 'init-misc)
 
-(require 'init-folding)
+;; (require 'init-folding)
 (require 'init-dash)
+
 
 (require 'init-ledger)
 (require 'init-lua)
@@ -192,3 +193,6 @@
 ;; no-byte-compile: t
 ;; End:
 ;;; init.el ends here
+;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
+(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
+;; ## end of OPAM user-setup addition for emacs / base ## keep this line
