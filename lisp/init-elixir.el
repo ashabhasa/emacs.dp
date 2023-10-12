@@ -29,9 +29,9 @@
   )
 
 
-;; (add-to-list 'eglot-server-programs '(elixir-mode  "~/dev/elixir/elixir-ls-gh/release_25_09_2023/language_server.sh"))
+;; (add-to-list 'eglot-server-programs '(elixir-mode  "~/dev/elixir/elixir-ls-gh/release_12_10_2023/language_server.sh"))
 
-(add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_25_09_2023/language_server.sh"))
+(add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_12_10_2023/language_server.sh"))
 
 (unless (package-installed-p 'exunit)
   (package-install 'exunit))
@@ -88,8 +88,6 @@
   (define-key elixir-ts-mode-map (kbd "C-c C-t") 'my/mix-run-test-at-point)
   (define-key elixir-ts-mode-map (kbd "C-c C-f") 'elixir-format)  )
 
-;; (add-hook 'elixir-ts-mode #'(lambda () (if (bound-and-true-p elixir-ts-mode) (global-corfu-mode -1) (global-corfu-mode 1))))
-;; (add-hook 'elixir-mode #'(lambda () (if (bound-and-true-p elixir-ts-mode) (global-corfu-mode -1) (global-corfu-mode 1))))
 
 (provide 'init-elixir)
  ;;; init-elixir.el ends here
