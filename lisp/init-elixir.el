@@ -22,12 +22,6 @@
 ;; (add-hook 'elixir-mode-hook 'eglot-ensure)
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
 
-(when (maybe-require-package 'yasnippet)
-  (add-hook 'elixir-mode-hook #'yas-minor-mode)
-  (add-hook 'elixir-ts-mode #'yas-minor-mode)
-  (add-hook 'elixir-mode #'yas-minor-mode)
-  )
-
 
 ;; (add-to-list 'eglot-server-programs '(elixir-mode  "~/dev/elixir/elixir-ls-gh/release_12_10_2023/language_server.sh"))
 

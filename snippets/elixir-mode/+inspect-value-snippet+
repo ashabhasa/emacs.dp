@@ -3,4 +3,4 @@
 # key: il
 # group: elixir-mode
 # --
-|> IO.inspect(label: "${some-label}")
+ |> IO.inspect(label: "$1", limit: :infinity)

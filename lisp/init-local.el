@@ -236,21 +236,20 @@
 
 
 ;; yas
-(unless (package-installed-p 'yasnippet)
-  (package-install 'yasnippet))
-
-(unless (package-installed-p 'yasnippet-snippets)
-  (package-install 'yasnippet-snippets)
-  (maybe-require-package 'yasnippet-snippets))
-
 (when (maybe-require-package 'yasnippet)
-  (yas-reload-all)
-  (add-hook 'prog-mode #'yas-minor-mode)
-  (add-hook 'conf-mode #'yas-minor-mode)
-  (add-hook 'text-mode #'yas-minor-mode)
-  (add-hook 'snippet-mode #'yas-minor-mode)
   (require-package 'yasnippet-snippets)
+  (require 'yasnippet)
+  (yas-reload-all)
+  (add-hook 'prog-mode-hook #'yas-minor-mode)
+  (add-hook 'conf-mode-hook #'yas-minor-mode)
+  (add-hook 'text-mode-hook #'yas-minor-mode)
+  (add-hook 'snippet-mode-hook #'yas-minor-mode)
   )
+
+(defun disable-new-line () (set (make-local-variable 'require-final-newline) nil))
+
+(add-hook 'elixir-ts-mode-hook #'disable-new-line)
+(add-hook 'snippet-mode-hook #'disable-new-line)
 
 ;; configure dumb-jump
 ;; (require-package 'dumb-jump)
