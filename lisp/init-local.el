@@ -259,8 +259,11 @@
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
 
-;; (add-hook 'elixir-ts-mode-hook (lambda () (setq-local corfu-local nil)))
-;; (add-hook 'elixir-mode-hook (lambda () (setq-local corfu-local nil)))
+;; utilities to move between windows
+(global-set-key [M-s-left] 'windmove-left)          ; move to left window
+(global-set-key [M-s-right] 'windmove-right)        ; move to right window
+(global-set-key [M-s-up] 'windmove-up)              ; move to upper window
+(global-set-key [M-s-down] 'windmove-down)          ; move to lower window
 
 (provide 'init-local)
  ;;; init-local.el ends here
