@@ -50,10 +50,10 @@
 
 
 ;; add treesitter support
-;; (setq treesit-language-source-alist
-;;       '((elixir "https://github.com/elixir-lang/tree-sitter-elixir")
-;;         (heex "https://github.com/phoenixframework/tree-sitter-heex.git"))
-;;       )
+(setq treesit-language-source-alist
+      '((elixir "https://github.com/elixir-lang/tree-sitter-elixir")
+        (heex "https://github.com/phoenixframework/tree-sitter-heex.git"))
+      )
 
 ;; run mox test from emacs
 ;; copied from https://dev.to/erickgnavar/minimal-setup-for-elixir-development-in-emacs-5k4
