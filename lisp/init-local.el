@@ -244,6 +244,7 @@
   (maybe-require-package 'yasnippet-snippets))
 
 (when (maybe-require-package 'yasnippet)
+  (yas-reload-all)
   (add-hook 'prog-mode #'yas-minor-mode)
   (add-hook 'conf-mode #'yas-minor-mode)
   (add-hook 'text-mode #'yas-minor-mode)
