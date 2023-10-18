@@ -265,5 +265,12 @@
 (global-set-key [M-s-up] 'windmove-up)              ; move to upper window
 (global-set-key [M-s-down] 'windmove-down)          ; move to lower window
 
+;; utility to copy buffer file name
+(defun filename ()
+  "Copy the full path of the current buffer to the kill ring."
+  (interactive)
+  (kill-new (buffer-file-name (window-buffer (minibuffer-selected-window)))))
+
+
 (provide 'init-local)
  ;;; init-local.el ends here
