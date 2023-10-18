@@ -15,7 +15,7 @@
 (setq completion-cycle-threshold 4)
 
 (when (maybe-require-package 'corfu)
-  ;; (setq-default corfu-auto t)
+  (setq-default corfu-auto t)
   (with-eval-after-load 'eshell
     (add-hook 'eshell-mode-hook (lambda () (setq-local corfu-auto nil))))
   (setq-default corfu-quit-no-match 'separator)
