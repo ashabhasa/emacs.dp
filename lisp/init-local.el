@@ -271,6 +271,11 @@
   (interactive)
   (kill-new (buffer-file-name (window-buffer (minibuffer-selected-window)))))
 
+;; magit utilities
+(global-set-key (kbd "C-x m") 'magit-show-refs)          ; show refs in other buffer
+;; (add-hook 'magit-status-sections-hook #'magit-insert-local-branches)
+;; (add-hook 'magit-status-sections-hook #'magit-insert-remote-branches)
+;; (add-hook 'magit-status-sections-hook #'magit-insert-tags)
 
 (provide 'init-local)
  ;;; init-local.el ends here
