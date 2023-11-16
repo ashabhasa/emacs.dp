@@ -6,7 +6,7 @@
 
 (set-face-attribute 'default nil
                     :family "PragmataPro Mono"
-                    :height 150
+                    :height 155
                     :weight 'regular)
 
 
