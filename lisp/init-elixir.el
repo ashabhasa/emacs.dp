@@ -25,7 +25,7 @@
 
 ;; (add-to-list 'eglot-server-programs '(elixir-mode  "~/dev/elixir/elixir-ls-gh/release_16_11_2023/language_server.sh"))
 
-(add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_16_11_2023/language_server.sh"))
+(add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_02_01_2024/language_server.sh"))
 
 (unless (package-installed-p 'exunit)
   (package-install 'exunit))
