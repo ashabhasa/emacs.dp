@@ -5,12 +5,12 @@
 
 
 (set-face-attribute 'default nil
-                    :family "PragmataPro Mono"
-                    :height 155
+                    :family "PragmataPro Mono Liga"
+                    :height 150
                     :weight 'regular)
 
 
-
+(color-theme-sanityinc-tomorrow-eighties)
 ;; (set-face-attribute 'default nil :height 143)
 
 (global-set-key (kbd "M-w") 'easy-kill)
