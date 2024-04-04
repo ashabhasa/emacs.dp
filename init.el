@@ -73,7 +73,7 @@
 (require 'init-minibuffer)
 (require 'init-hippie-expand)
 (require 'init-corfu)
-;;(require 'init-company)
+
 (require 'init-windows)
 (require 'init-sessions)
 (require 'init-mmm)
@@ -82,9 +82,9 @@
 (require 'init-whitespace)
 
 (require 'init-vc)
-;;(require 'init-darcs)
+(require 'init-darcs)
 (require 'init-git)
-;;(require 'init-github)
+(require 'init-github)
 
 (require 'init-projectile)
 
@@ -96,25 +96,25 @@
 (require 'init-erlang)
 (require 'init-elixir)
 (require 'init-javascript)
-;;(require 'init-php)
+(require 'init-php)
 (require 'init-org)
 (require 'init-nxml)
 (require 'init-html)
 (require 'init-css)
-;;(require 'init-haml)
+(require 'init-haml)
 (require 'init-http)
-;;(require 'init-python)
-;;(require 'init-haskell)
-;;(require 'init-elm)
-;;(require 'init-purescript)
-;;(require 'init-ruby)
-;;(require 'init-rails)
+(require 'init-python)
+(require 'init-haskell)
+(require 'init-elm)
+(require 'init-purescript)
+(require 'init-ruby)
+(require 'init-rails)
 (require 'init-sql)
 (require 'init-ocaml)
 (require 'init-j)
-;; (require 'init-nim)
+(require 'init-nim)
 (require 'init-rust)
-;; (require 'init-toml)
+(require 'init-toml)
 (require 'init-yaml)
 (require 'init-docker)
 (require 'init-terraform)
@@ -126,9 +126,9 @@
 (require 'init-paredit)
 (require 'init-lisp)
 
-;;(require 'init-sly)
-;;(require 'init-clojure)
-;;(require 'init-clojure-cider)
+(require 'init-sly)
+(require 'init-clojure)
+(require 'init-clojure-cider)
 (require 'init-common-lisp)
 
 (when *spell-check-support-enabled*
@@ -141,9 +141,9 @@
 
 
 
-;;( require 'init-ledger)
-;;(require 'init-lua)
-;; (require 'init-uiua)
+( require 'init-ledger)
+(require 'init-lua)
+(require 'init-uiua)
 (require 'init-terminals)
 
 ;; Extra packages which don't require any configuration
