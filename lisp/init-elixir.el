@@ -25,7 +25,7 @@
 
 ;; (add-to-list 'eglot-server-programs '(elixir-mode  "~/dev/elixir/elixir-ls-gh/release_16_11_2023/language_server.sh"))
 
-(add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_23_01_2024/language_server.sh"))
+(add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_23_02_2024/language_server.sh"))
 
 (unless (package-installed-p 'exunit)
   (package-install 'exunit))
@@ -80,8 +80,9 @@
 
 (with-eval-after-load 'elixir-ts-mode
   (define-key elixir-ts-mode-map (kbd "C-c C-t") 'my/mix-run-test-at-point)
-  (define-key elixir-ts-mode-map (kbd "C-c C-f") 'elixir-format)  )
+  (define-key elixir-ts-mode-map (kbd "C-c C-f") 'elixir-format))
 
+(add-hook 'elixir-ts-mode-hook #'rainbow-delimiters-mode)
 
 (provide 'init-elixir)
  ;;; init-elixir.el ends here

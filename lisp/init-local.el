@@ -225,6 +225,39 @@
 
 ;; (global-set-key (kbd "C-c f")  #'arber/open-file-at-cursor)
 
+(defun xah-copy-file-path (&optional DirPathOnlyQ)
+  "Copy current buffer file path or dired path.
+Result is full path.
+If `universal-argument' is called first, copy only the dir path.
+
+If in dired, copy the current or marked files.
+
+If a buffer is not file and not dired, copy value of `default-directory'.
+
+URL `http://xahlee.info/emacs/emacs/emacs_copy_file_path.html'
+Version 2018-06-18 2021-09-30"
+  (interactive "P")
+  (let (($fpath
+         (if (string-equal major-mode 'dired-mode)
+             (progn
+               (let (($result (mapconcat 'identity (dired-get-marked-files) "\n")))
+                 (if (equal (length $result) 0)
+                     (progn default-directory )
+                   (progn $result))))
+           (if (buffer-file-name)
+               (buffer-file-name)
+             (expand-file-name default-directory)))))
+    (kill-new
+     (if DirPathOnlyQ
+         (progn
+           (message "Directory copied: %s" (file-name-directory $fpath))
+           (file-name-directory $fpath))
+       (progn
+         (message "File path copied: %s" $fpath)
+         $fpath )))))
+
+(global-set-key (kbd "C-x y b")  #'xah-copy-file-path)
+
 
 (when (maybe-require-package 'avy)
   (global-set-key (kbd "C-:") 'avy-goto-char)
@@ -257,7 +290,8 @@
 ;; (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
 (when (maybe-require-package 'dumb-jump)
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-  (setq xref-show-definitions-function #'xref-show-definitions-completing-read))
+  (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
+  (setq dumb-jump-prefer-searcher 'rg))
 
 ;; utilities to move between windows
 (global-set-key [M-s-left] 'windmove-left)          ; move to left window
@@ -276,6 +310,152 @@
 ;; (add-hook 'magit-status-sections-hook #'magit-insert-local-branches)
 ;; (add-hook 'magit-status-sections-hook #'magit-insert-remote-branches)
 ;; (add-hook 'magit-status-sections-hook #'magit-insert-tags)
+
+;; disable vc-mode for git
+;; (setq vc-handled-backends nil)
+
+;; select text between brackets
+;; this was taken from http://xahlee.info/emacs/emacs/emacs_select_quote_text.html
+
+(defvar xah-brackets '("“”" "()" "[]" "{}" "<>" "＜＞" "（）" "［］" "｛｝" "⦅⦆" "〚〛" "⦃⦄" "‹›" "«»" "「」" "〈〉" "《》" "【】" "〔〕" "⦗⦘" "『』" "〖〗" "〘〙" "｢｣" "⟦⟧" "⟨⟩" "⟪⟫" "⟮⟯" "⟬⟭" "⌈⌉" "⌊⌋" "⦇⦈" "⦉⦊" "❛❜" "❝❞" "❨❩" "❪❫" "❴❵" "❬❭" "❮❯" "❰❱" "❲❳" "〈〉" "⦑⦒" "⧼⧽" "﹙﹚" "﹛﹜" "﹝﹞" "⁽⁾" "₍₎" "⦋⦌" "⦍⦎" "⦏⦐" "⁅⁆" "⸢⸣" "⸤⸥" "⟅⟆" "⦓⦔" "⦕⦖" "⸦⸧" "⸨⸩" "｟｠")
+  "A list of strings, each element is a string of 2 chars,
+   the left bracket and a matching right bracket.
+Used by `xah-select-text-in-quote' and others.
+Version 2023-07-31")
+
+(defconst xah-left-brackets
+  (mapcar (lambda (x) (substring x 0 1)) xah-brackets)
+  "List of left bracket chars. Each element is a string.")
+
+(defconst xah-right-brackets
+  (mapcar (lambda (x) (substring x 1 2)) xah-brackets)
+  "List of right bracket chars. Each element is a string.")
+
+(defun xah-select-text-in-quote ()
+  "Select text between the nearest left and right delimiters.
+Delimiters here includes QUOTATION MARK, GRAVE ACCENT, and anything in `xah-brackets'.
+This command ignores nesting.  For example, if text is
+「(a(b)c▮)」
+the selected char is 「c」, not 「a(b)c」.
+
+URL `http://xahlee.info/emacs/emacs/emacs_select_quote_text.html'
+Version: 2020-11-24 2023-07-23 2023-11-14"
+  (interactive)
+  (let ((xskipChars (concat "^\"`" (mapconcat #'identity xah-brackets ""))))
+    (skip-chars-backward xskipChars)
+    (push-mark (point) t t)
+    (skip-chars-forward xskipChars)))
+
+(defun xah-change-bracket-pairs (FromChars ToChars)
+  "Change bracket pairs to another type or none.
+For example, change all parenthesis () to square brackets [].
+Works on current block or selection.
+
+In lisp code, FromChars is a string with at least 2 spaces.
+e.g.
+paren ( )
+french angle ‹ ›
+double bracket [[ ]]
+etc.
+It is split by space, and last 2 items are taken as left and right brackets.
+
+ToChars is similar, with a special value of
+none
+followed by 2 spaces.
+,it means replace by empty string.
+
+URL `http://xahlee.info/emacs/emacs/elisp_change_brackets.html'
+Version: 2020-11-01 2023-03-31 2023-08-25 2023-09-29"
+  (interactive
+   (let ((xbrackets
+          '(
+            "square [ ]"
+            "brace { }"
+            "paren ( )"
+            "greater < >"
+            "double quote \" \""
+            "single quote ' '"
+            "emacs ` '"
+            "markdown grave accent ` `"
+            "double square [[ ]]"
+            "tilde ~ ~"
+            "equal = ="
+            "curly double quote “ ”"
+            "curly single quote ‘ ’"
+            "french angle ‹ ›"
+            "french double angle « »"
+            "corner 「 」"
+            "white corner 『 』"
+            "lenticular 【 】"
+            "white lenticular 〖 〗"
+            "angle 〈 〉"
+            "double angle 《 》"
+            "tortoise 〔 〕"
+            "white tortoise 〘 〙"
+            "white square 〚 〛"
+            "white paren ⦅ ⦆"
+            "white curly bracket ⦃ ⦄"
+            "pointing angle 〈 〉"
+            "angle with dot ⦑ ⦒"
+            "curved angle ⧼ ⧽"
+            "math square ⟦ ⟧"
+            "math angle ⟨ ⟩"
+            "math double angle ⟪ ⟫"
+            "math flattened parenthesis ⟮ ⟯"
+            "math white tortoise shell ⟬ ⟭"
+            "heavy single quotation mark ornament ❛ ❜"
+            "heavy double turned comma quotation mark ornament ❝ ❞"
+            "medium parenthesis ornament ❨ ❩"
+            "medium flattened parenthesis ornament ❪ ❫"
+            "medium curly ornament ❴ ❵"
+            "medium pointing angle ornament ❬ ❭"
+            "heavy pointing angle quotation mark ornament ❮ ❯"
+            "heavy pointing angle ornament ❰ ❱"
+            "none  "
+            )))
+     (let ((completion-ignore-case t))
+       (list
+        (completing-read "Replace this:" xbrackets nil t nil nil (car xbrackets))
+        (completing-read "To:" xbrackets nil t nil nil (car (last xbrackets)))))))
+  (let (xp1 xp2 xleft xright xtoL xtoR)
+    (let ((xbds (xah-get-bounds-of-block-or-region))) (setq xp1 (car xbds) xp2 (cdr xbds)))
+    (let ((xsFrom (last (split-string FromChars " ") 2))
+          (xsTo (last (split-string ToChars " ") 2)))
+
+      ;; (when (< (length xsFrom) 3)
+      ;; (error "cannot find input brackets %s" xsFrom))
+
+      ;; (when (< (length xsTo) 3)
+      ;;   (message "replace blacket is empty string")
+      ;;   (setq xsTo (list "" "" "")))
+
+      (setq xleft (car xsFrom)  xright (car (cdr xsFrom))
+            xtoL (car xsTo) xtoR (car (cdr xsTo)))
+
+      (save-excursion
+        (save-restriction
+          (narrow-to-region xp1 xp2)
+          (let ((case-fold-search nil))
+            (if (string-equal xleft xright)
+                (let ((xx (regexp-quote xleft)))
+                  (goto-char (point-min))
+                  (while
+                      (re-search-forward
+                       (format "%s\\([^%s]+?\\)%s" xx xx xx)
+                       nil t)
+                    (overlay-put (make-overlay (match-beginning 0) (match-end 0)) 'face 'highlight)
+                    (replace-match (concat xtoL "\\1" xtoR) t)))
+              (progn
+                (progn
+                  (goto-char (point-min))
+                  (while (search-forward xleft nil t)
+                    (overlay-put (make-overlay (match-beginning 0) (match-end 0)) 'face 'highlight)
+                    (replace-match xtoL t t)))
+                (progn
+                  (goto-char (point-min))
+                  (while (search-forward xright nil t)
+                    (overlay-put (make-overlay (match-beginning 0) (match-end 0)) 'face 'highlight)
+                    (replace-match xtoR t t)))))))))))
 
 (provide 'init-local)
  ;;; init-local.el ends here
