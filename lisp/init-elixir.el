@@ -80,9 +80,13 @@
 
 (with-eval-after-load 'elixir-ts-mode
   (define-key elixir-ts-mode-map (kbd "C-c C-t") 'my/mix-run-test-at-point)
-  (define-key elixir-ts-mode-map (kbd "C-c C-f") 'elixir-format))
+  (define-key elixir-ts-mode-map (kbd "C-c C-f") 'elixir-format)
+  (define-key elixir-ts-mode-map (kbd "C-c h") 'mark-defun)
+  (define-key elixir-ts-mode-map (kbd "M-a") 'treesit-beginning-of-defun)
+  (define-key elixir-ts-mode-map (kbd "M-e") 'treesit-end-of-defun)
+  )
 
-(add-hook 'elixir-ts-mode-hook #'rainbow-delimiters-mode)
+;; (add-hook 'elixir-ts-mode-hook #'rainbow-delimiters-mode)
 
 (provide 'init-elixir)
  ;;; init-elixir.el ends here
