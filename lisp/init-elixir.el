@@ -25,7 +25,8 @@
 
 ;; (add-to-list 'eglot-server-programs '(elixir-mode  "~/dev/elixir/elixir-ls-gh/release_16_11_2023/language_server.sh"))
 
-(add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_23_02_2024/language_server.sh"))
+;; (add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_23_02_2024/language_server.sh"))
+(add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_22_05_2024/language_server.sh"))
 
 (unless (package-installed-p 'exunit)
   (package-install 'exunit))
@@ -51,28 +52,37 @@
 
 ;; run mox test from emacs
 ;; copied from https://dev.to/erickgnavar/minimal-setup-for-elixir-development-in-emacs-5k4
-(defun my/mix-run-test (&optional at-point)
-  "If AT-POINT is true it will pass the line number to mix test."
+(defun my/mix-run-test (&optional at-point trace)
+  "If AT-POINT is true it will pass the line number to mix test.
+If TRACE runs tests with detailed reporting"
   (interactive)
   (let* ((current-file (buffer-file-name))
          (current-line (line-number-at-pos))
+         (trace-flag (if trace
+                         "--trace"
+                       ""))
          (mix-file (concat (projectile-project-root) "mix.exs"))
          (default-directory (file-name-directory mix-file))
          (mix-env (concat "MIX_ENV=test ")))
 
     (if at-point
-        (compile (format "%s mix test %s:%s" mix-env current-file current-line))
-      (compile (format "%s mix test %s" mix-env current-file)))))
+        (compile (format "%s mix test %s %s:%s" mix-env trace-flag current-file current-line))
+      (compile (format "%s mix test %s %s" mix-env trace-flag current-file)))))
 
 (defun my/mix-run-test-file ()
   "Run mix test over the current file."
   (interactive)
-  (my/mix-run-test nil))
+  (my/mix-run-test nil nil))
 
 (defun my/mix-run-test-at-point ()
   "Run mix test at point."
   (interactive)
-  (my/mix-run-test t))
+  (my/mix-run-test t nil))
+
+(defun my/mix-run-tests-with-trace ()
+  "Run mix test at point."
+  (interactive)
+  (my/mix-run-test nil t))
 
 ;; (with-eval-after-load 'elixir-mode
 ;;   (define-key elixir-mode-map (kbd "C-c C-f") 'elixir-format)
@@ -80,6 +90,7 @@
 
 (with-eval-after-load 'elixir-ts-mode
   (define-key elixir-ts-mode-map (kbd "C-c C-t") 'my/mix-run-test-at-point)
+  (define-key elixir-ts-mode-map (kbd "C-c t t") 'my/mix-run-tests-with-trace)
   (define-key elixir-ts-mode-map (kbd "C-c C-f") 'elixir-format)
   (define-key elixir-ts-mode-map (kbd "C-c h") 'mark-defun)
   (define-key elixir-ts-mode-map (kbd "M-a") 'treesit-beginning-of-defun)

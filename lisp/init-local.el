@@ -1,12 +1,16 @@
 ;;; init-local.el --- Load custom modification
- ;;; Commentary:
- ;;; Code:
- ;;; Fonts setup:
+;;; Commentary:
+;;; Code:
+;;; Fonts setup:
 
 
+;; (set-face-attribute 'default nil
+;;                     :family "PragmataPro Mono Liga"
+;;                     :height 150
+;;                     :weight 'regular)
 (set-face-attribute 'default nil
                     :family "PragmataPro Mono Liga"
-                    :height 150
+                    :height 165
                     :weight 'regular)
 
 
