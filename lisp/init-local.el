@@ -10,11 +10,11 @@
 ;;                     :weight 'regular)
 (set-face-attribute 'default nil
                     :family "PragmataPro Mono Liga"
-                    :height 165
+                    :height 155
                     :weight 'regular)
 
 
-(color-theme-sanityinc-tomorrow-eighties)
+;; (color-theme-sanityinc-tomorrow-eighties)
 ;; (set-face-attribute 'default nil :height 143)
 
 (global-set-key (kbd "M-w") 'easy-kill)
