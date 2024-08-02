@@ -98,5 +98,15 @@ If TRACE runs tests with detailed reporting"
 
 ;; (add-hook 'elixir-ts-mode-hook #'rainbow-delimiters-mode)
 
+;; use dumb-jump for elixir
+(with-eval-after-load 'elixir-ts-mode
+  (add-to-list 'eglot-stay-out-of 'xref)
+  (when (maybe-require-package 'dumb-jump)
+    (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+    (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
+    (setq dumb-jump-force-searcher 'rg)))
+
+;; (global-set-key (kbd "M-?") #'xref-find-references)
+
 (provide 'init-elixir)
  ;;; init-elixir.el ends here

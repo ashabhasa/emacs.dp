@@ -25,7 +25,7 @@
 ;; (add-hook 'prog-mode-hook 'origami-mode)
 
 ;; bind M-? to x-find-ref
-(global-set-key (kbd "M-?") #'xref-find-references)
+;; (global-set-key (kbd "M-?") #'xref-find-references)
 
 (setq-default line-spacing nil)
 
@@ -288,14 +288,6 @@ Version 2018-06-18 2021-09-30"
 (add-hook 'elixir-ts-mode-hook #'disable-new-line)
 (add-hook 'snippet-mode-hook #'disable-new-line)
 
-;; configure dumb-jump
-;; (require-package 'dumb-jump)
-;; (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-;; (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
-(when (maybe-require-package 'dumb-jump)
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-  (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
-  (setq dumb-jump-force-searcher 'rg))
 
 ;; utilities to move between windows
 (global-set-key [M-s-left] 'windmove-left)          ; move to left window
