@@ -295,7 +295,7 @@ Version 2018-06-18 2021-09-30"
 (when (maybe-require-package 'dumb-jump)
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
-  (setq dumb-jump-prefer-searcher 'rg))
+  (setq dumb-jump-force-searcher 'rg))
 
 ;; utilities to move between windows
 (global-set-key [M-s-left] 'windmove-left)          ; move to left window
