@@ -8,10 +8,13 @@
 ;;                     :family "PragmataPro Mono Liga"
 ;;                     :height 150
 ;;                     :weight 'regular)
+;; (set-face-attribute 'default nil
+;;                     :family "PragmataPro Mono Liga"
+;;                     :height 130
+;;                     :weight 'regular)
+
 (set-face-attribute 'default nil
-                    :family "PragmataPro Mono Liga"
-                    :height 155
-                    :weight 'regular)
+                    :font "PragmataPro Mono-13:antialias=false:hinting=true:autohint=false:hint=3")
 
 
 ;; (color-theme-sanityinc-tomorrow-eighties)
@@ -20,12 +23,6 @@
 (global-set-key (kbd "M-w") 'easy-kill)
 
 (global-set-key (kbd "M-j") 'join-lines)
-
-;; enable origami folding
-;; (add-hook 'prog-mode-hook 'origami-mode)
-
-;; bind M-? to x-find-ref
-;; (global-set-key (kbd "M-?") #'xref-find-references)
 
 (setq-default line-spacing nil)
 
@@ -226,8 +223,6 @@
                   (find-file (concat $path ".el"))
                 (when (y-or-n-p (format "file no exist: 「%s」. Create?" $path))
                   (find-file $path ))))))))))
-
-;; (global-set-key (kbd "C-c f")  #'arber/open-file-at-cursor)
 
 (defun xah-copy-file-path (&optional DirPathOnlyQ)
   "Copy current buffer file path or dired path.
@@ -452,6 +447,12 @@ Version: 2020-11-01 2023-03-31 2023-08-25 2023-09-29"
                   (while (search-forward xright nil t)
                     (overlay-put (make-overlay (match-beginning 0) (match-end 0)) 'face 'highlight)
                     (replace-match xtoR t t)))))))))))
+
+(global-set-key (kbd "C-x C-f") 'ido-find-file)
+(global-set-key (kbd "M-<up>") 'windmove-swap-states-up)
+(global-set-key (kbd "M-<right>") 'windmove-swap-states-right)
+(global-set-key (kbd "M-<left>") 'windmove-swap-states-left)
+(global-set-key (kbd "M-<down>") 'windmove-swap-states-down)
 
 (provide 'init-local)
  ;;; init-local.el ends here

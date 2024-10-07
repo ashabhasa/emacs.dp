@@ -23,9 +23,6 @@
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
 
 
-;; (add-to-list 'eglot-server-programs '(elixir-mode  "~/dev/elixir/elixir-ls-gh/release_16_11_2023/language_server.sh"))
-;; (add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_14_06_2024/language_server.sh"))
-;; (add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_24_07_2024/language_server.sh"))
 (add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_26_08_2024/language_server.sh"))
 
 (unless (package-installed-p 'exunit)
@@ -84,9 +81,7 @@ If TRACE runs tests with detailed reporting"
   (interactive)
   (my/mix-run-test nil t))
 
-;; (with-eval-after-load 'elixir-mode
-;;   (define-key elixir-mode-map (kbd "C-c C-f") 'elixir-format)
-;;   (define-key elixir-mode-map (kbd "C-c C-t") 'my/mix-run-test-at-point))
+
 
 (with-eval-after-load 'elixir-ts-mode
   (define-key elixir-ts-mode-map (kbd "C-c C-t") 'my/mix-run-test-at-point)
@@ -95,19 +90,14 @@ If TRACE runs tests with detailed reporting"
   (define-key elixir-ts-mode-map (kbd "C-c h") 'mark-defun)
   (define-key elixir-ts-mode-map (kbd "M-a") 'treesit-beginning-of-defun)
   (define-key elixir-ts-mode-map (kbd "M-e") 'treesit-end-of-defun)
-  )
-
-;; (add-hook 'elixir-ts-mode-hook #'rainbow-delimiters-mode)
-
-;; use dumb-jump for elixir
-(with-eval-after-load 'elixir-ts-mode
+  ;; use dumb-jump for elixir
   (add-to-list 'eglot-stay-out-of 'xref)
   (when (maybe-require-package 'dumb-jump)
     (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
     (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
-    (setq dumb-jump-force-searcher 'rg)))
-
-;; (global-set-key (kbd "M-?") #'xref-find-references)
+    (setq dumb-jump-force-searcher 'rg))
+  (add-hook 'elixir-ts-mode-hook #'rainbow-delimiters-mode)
+  )
 
 (provide 'init-elixir)
  ;;; init-elixir.el ends here
