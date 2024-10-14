@@ -13,8 +13,7 @@
 ;;                     :height 130
 ;;                     :weight 'regular)
 
-(set-face-attribute 'default nil
-                    :font "PragmataPro Mono-13:antialias=false:hinting=true:autohint=false:hint=3")
+(set-face-attribute 'default nil :font "PragmataPro-11:antialias=true:hinting=true:autohint=false:hint=3")
 
 
 ;; (color-theme-sanityinc-tomorrow-eighties)

@@ -75,8 +75,6 @@ If TRACE runs tests with detailed reporting"
   (interactive)
   (my/mix-run-test nil t))
 
-
-
 (with-eval-after-load 'elixir-ts-mode
   (define-key elixir-ts-mode-map (kbd "C-c C-t") 'my/mix-run-test-at-point)
   (define-key elixir-ts-mode-map (kbd "C-c t t") 'my/mix-run-tests-with-trace)
