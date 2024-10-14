@@ -41,13 +41,6 @@
       '((elixir-mode . elixir-ts-mode)
         (heex-mode . heex-ts-mode)))
 
-
-;; add treesitter support
-(setq treesit-language-source-alist
-      '((elixir "https://github.com/elixir-lang/tree-sitter-elixir")
-        (heex "https://github.com/phoenixframework/tree-sitter-heex.git"))
-      )
-
 ;; run mox test from emacs
 ;; copied from https://dev.to/erickgnavar/minimal-setup-for-elixir-development-in-emacs-5k4
 (defun my/mix-run-test (&optional at-point trace)

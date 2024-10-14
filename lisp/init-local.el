@@ -454,5 +454,40 @@ Version: 2020-11-01 2023-03-31 2023-08-25 2023-09-29"
 (global-set-key (kbd "M-<left>") 'windmove-swap-states-left)
 (global-set-key (kbd "M-<down>") 'windmove-swap-states-down)
 
+
+;; add treesitter support for some languages
+(setq treesit-language-source-alist
+      '((elixir "https://github.com/elixir-lang/tree-sitter-elixir")
+        (heex "https://github.com/phoenixframework/tree-sitter-heex.git")
+        (css . ("https://github.com/tree-sitter/tree-sitter-css" "v0.20.0"))
+        (html . ("https://github.com/tree-sitter/tree-sitter-html" "v0.20.1"))
+        (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "v0.20.1" "src"))
+        (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.20.2"))
+        (markdown . ("https://github.com/ikatyang/tree-sitter-markdown" "v0.7.1"))
+        (python . ("https://github.com/tree-sitter/tree-sitter-python" "v0.20.4"))
+        (rust . ("https://github.com/tree-sitter/tree-sitter-rust" "v0.21.2"))
+        (toml . ("https://github.com/tree-sitter/tree-sitter-toml" "v0.5.1"))
+        (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "tsx/src"))
+        (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "typescript/src"))
+        (yaml . ("https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0"))
+        )
+      )
+
+;; typescript configuration
+;; I'm not sure why this is needed, but it throws an error if I remove it
+(cl-defmethod project-root ((project (head eglot-project)))
+  (cdr project))
+
+(defun my-project-try-tsconfig-json (dir)
+  (when-let* ((found (locate-dominating-file dir "tsconfig.json")))
+    (cons 'eglot-project found)))
+
+(add-hook 'project-find-functions
+          'my-project-try-tsconfig-json nil nil)
+
+(add-to-list 'eglot-server-programs
+             '((typescript-mode) "typescript-language-server" "--stdio"))
+
+
 (provide 'init-local)
  ;;; init-local.el ends here
