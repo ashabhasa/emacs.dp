@@ -92,11 +92,11 @@ If TRACE runs tests with detailed reporting"
   (define-key elixir-ts-mode-map (kbd "M-a") 'treesit-beginning-of-defun)
   (define-key elixir-ts-mode-map (kbd "M-e") 'treesit-end-of-defun)
   ;; use dumb-jump for elixir
-  (add-to-list 'eglot-stay-out-of 'xref)
-  (when (maybe-require-package 'dumb-jump)
-    (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-    (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
-    (setq dumb-jump-force-searcher 'rg))
+  ;; (add-to-list 'eglot-stay-out-of 'xref)
+  ;; (when (maybe-require-package 'dumb-jump)
+  ;;   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  ;;   (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
+  ;;   (setq dumb-jump-force-searcher 'rg))
   (add-hook 'elixir-ts-mode-hook #'rainbow-delimiters-mode)
   )
 
