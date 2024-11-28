@@ -3,4 +3,4 @@
 # key: d
 # group: elixir-mode
 # --
-|> dbg()
+|> dbg(pretty: true, limit: :infinity, printable_limit: :infinity)
