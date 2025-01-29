@@ -23,8 +23,8 @@
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
 
 
-;; (add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_26_08_2024/language_server.sh"))
-(add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_12_10_2024/language_server.sh"))
+;; (add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_12_10_2024/language_server.sh"))
+(add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_07_01_2025/language_server.sh"))
 
 (unless (package-installed-p 'exunit)
   (package-install 'exunit))
