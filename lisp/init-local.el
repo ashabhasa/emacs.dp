@@ -91,6 +91,7 @@
 ;; Use easy-mark in place of mark-sexp
 (global-set-key [remap mark-sexp] 'easy-mark)
 (global-set-key [remap counsel-apropos] 'apropos-command)
+(global-set-key (kbd "M-o") 'switch-window)
 
 (setq create-lockfiles nil)
 (defun join-lines (n)
