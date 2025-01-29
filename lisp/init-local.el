@@ -13,7 +13,13 @@
 ;;                     :height 130
 ;;                     :weight 'regular)
 
-(set-face-attribute 'default nil :font "PragmataPro-11:antialias=true:hinting=true:autohint=false:hint=3")
+
+;; on lg 27
+;; (set-face-attribute 'default nil :font "PragmataPro-10:antialias=true:hinting=true:autohint=false:hint=3")
+
+;; orginal mac book
+(set-face-attribute 'default nil :font "PragmataPro-12:antialias=true:hinting=true:autohint=false:hint=3")
+
 
 
 ;; (color-theme-sanityinc-tomorrow-eighties)
