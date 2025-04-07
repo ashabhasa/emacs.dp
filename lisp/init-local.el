@@ -15,14 +15,22 @@
 
 
 ;; on lg 27
-;; (set-face-attribute 'default nil :font "PragmataPro-10:antialias=true:hinting=true:autohint=false:hint=3")
+(set-face-attribute 'default nil :font "PragmataPro-13:antialias=true:hinting=true:autohint=false:hint=3")
 
 ;; orginal mac book
-(set-face-attribute 'default nil :font "PragmataPro-12:antialias=true:hinting=true:autohint=false:hint=3")
+;; (set-face-attribute 'default nil :font "PragmataPro-15:antialias=false:hinting=true:autohint=false:hint=3")
+
+;; on Dell
+;; (set-face-attribute 'default nil
+;;                     :family "PragmataPro Mono Liga"
+;;                     :height 145
+;;                     :weight 'regular
+;;                     )
 
 
 
-;; (color-theme-sanityinc-tomorrow-eighties)
+
+(color-theme-sanityinc-tomorrow-night)
 ;; (set-face-attribute 'default nil :height 143)
 
 (global-set-key (kbd "M-w") 'easy-kill)
@@ -32,8 +40,8 @@
 (setq-default line-spacing nil)
 
 (setq mac-allow-anti-aliasing 1)
-;; Better scrolling
 
+;; Better scrolling
 (setq redisplay-dont-pause t
       scroll-margin 1
       scroll-step 1
@@ -92,6 +100,7 @@
 (global-set-key [remap mark-sexp] 'easy-mark)
 (global-set-key [remap counsel-apropos] 'apropos-command)
 (global-set-key (kbd "M-o") 'switch-window)
+(global-set-key (kbd "C-c s") 'mark-sexp)
 
 (setq create-lockfiles nil)
 (defun join-lines (n)
@@ -494,6 +503,11 @@ Version: 2020-11-01 2023-03-31 2023-08-25 2023-09-29"
 (add-to-list 'eglot-server-programs
              '((typescript-mode) "typescript-language-server" "--stdio"))
 
+
+(eval-after-load "em-term"
+  '(progn
+     (add-to-list 'eshell-visual-subcommands '("git" "diff" "help" "log" "show"))
+     (add-to-list 'eshell-visual-options '("git" "--help" "--paginate"))))
 
 (provide 'init-local)
  ;;; init-local.el ends here
