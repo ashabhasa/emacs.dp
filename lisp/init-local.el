@@ -509,5 +509,12 @@ Version: 2020-11-01 2023-03-31 2023-08-25 2023-09-29"
      (add-to-list 'eshell-visual-subcommands '("git" "diff" "help" "log" "show"))
      (add-to-list 'eshell-visual-options '("git" "--help" "--paginate"))))
 
+(unless (package-installed-p 'eshell-prompt-extras)
+  (package-install 'eshell-prompt-extras))
+(with-eval-after-load "esh-opt"
+  (autoload 'epe-theme-lambda "eshell-prompt-extras")
+  (setq eshell-highlight-prompt nil
+        eshell-prompt-function 'epe-theme-lambda))
+
 (provide 'init-local)
  ;;; init-local.el ends here
