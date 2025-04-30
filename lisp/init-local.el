@@ -485,6 +485,7 @@ Version: 2020-11-01 2023-03-31 2023-08-25 2023-09-29"
         (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "tsx/src"))
         (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "typescript/src"))
         (yaml . ("https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0"))
+        (php "https://github.com/tree-sitter/tree-sitter-php")
         )
       )
 
