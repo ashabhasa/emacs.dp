@@ -517,5 +517,14 @@ Version: 2020-11-01 2023-03-31 2023-08-25 2023-09-29"
   (setq eshell-highlight-prompt nil
         eshell-prompt-function 'epe-theme-lambda))
 
+(unless (package-installed-p 'el-feed)
+  (package-install 'elfeed))
+
+(setq elfeed-feeds
+      '(("https://www.theatlantic.com/feed/all" news)
+        ("https://www.theguardian.com/uk/rss" news)
+        ("https://www.okmij.org/ftp/rss.xml" tech)
+        ))
+
 (provide 'init-local)
  ;;; init-local.el ends here
