@@ -526,9 +526,21 @@ Version: 2020-11-01 2023-03-31 2023-08-25 2023-09-29"
         ("https://www.okmij.org/ftp/rss.xml" tech)
         ))
 
+
 (when (maybe-require-package 'undo-tree)
   (global-undo-tree-mode)
   (setq undo-tree-auto-save-history nil))
+
+(use-package nerd-icons
+  :ensure t)
+
+
+;; use icons in dired
+(use-package nerd-icons-dired
+  :ensure t
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
 
 (provide 'init-local)
  ;;; init-local.el ends here
