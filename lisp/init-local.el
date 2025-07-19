@@ -569,6 +569,10 @@ Version: 2020-11-01 2023-03-31 2023-08-25 2023-09-29"
   :hook
   (dired-mode . nerd-icons-dired-mode))
 
+;; sql formatter
+(setq sqlformat-command 'pgformatter)
+;; Optional additional args
+(setq sqlformat-args '("-s2" "-g"))
 
 (provide 'init-local)
  ;;; init-local.el ends here
