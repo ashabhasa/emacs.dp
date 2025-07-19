@@ -310,6 +310,25 @@ Version 2018-06-18 2021-09-30"
 ;; end avy configuration
 
 
+;; isearch extensions
+;; from protosillas
+
+(defun arber/isearch-region (&optional not-regexp no-recuresive-edit)
+  "If the region is active make it the default search string"
+  (interactive "P\np")
+  (when (use-region-p)
+    (let ((search (buffer-substring-no-properties
+                   (region-beginning)
+                   (region-end))))
+      (message "arber/ir: %s %d %d" search (region-beginning) (region-end))
+      (setq deactivate-mark t)
+      (isearch-yank-string search))))
+
+(advice-add 'isearch-forward-regexp :after 'arber/isearch-region)
+(advice-add 'isearch-forward :after 'arber/isearch-region)
+(advice-add 'isearch-backward-regexp :after 'arber/isearch-region)
+(advice-add 'isearch-backward :after 'arber/isearch-region)
+
 ;; yas
 (when (maybe-require-package 'yasnippet)
   (require-package 'yasnippet-snippets)
