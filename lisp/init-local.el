@@ -273,13 +273,41 @@ Version 2018-06-18 2021-09-30"
 (global-set-key (kbd "C-x y b")  #'xah-copy-file-path)
 
 
+;; avy configuration
+
 (when (maybe-require-package 'avy)
   (global-set-key (kbd "C-:") 'avy-goto-char)
-  (global-set-key (kbd "C-'") 'avy-goto-char-2)
+  (global-set-key (kbd "C-'") 'avy-goto-char-timer)
   (global-set-key (kbd "M-g f") 'avy-goto-line)
   (global-set-key (kbd "M-g w") 'avy-goto-word-1))
 
+;;Replace with your package manager or help library of choice
+(unless (package-installed-p 'helpful)
+  (package-install 'helpful))
 
+(defun avy-action-helpful (pt)
+  (save-excursion
+    (goto-char pt)
+    (helpful-at-point))
+  (select-window
+   (cdr (ring-ref avy-ring 0)))
+  t)
+
+(defun avy-action-embark (pt)
+  (unwind-protect
+      (save-excursion
+        (goto-char pt)
+        (embark-act))
+    (select-window
+     (cdr (ring-ref avy-ring 0))))
+  t)
+
+(setf (alist-get ?H avy-dispatch-alist) 'avy-action-helpful)
+(setf (alist-get ?O avy-dispatch-alist) 'avy-action-embark)
+
+(define-key isearch-mode-map (kbd "M-j") 'avy-isearch)
+
+;; end avy configuration
 
 
 ;; yas
