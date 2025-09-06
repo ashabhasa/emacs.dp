@@ -568,9 +568,12 @@ Version: 2020-11-01 2023-03-31 2023-08-25 2023-09-29"
   (package-install 'elfeed))
 
 (setq elfeed-feeds
-      '(("https://www.theatlantic.com/feed/all" news)
-        ("https://www.theguardian.com/uk/rss" news)
-        ("https://www.okmij.org/ftp/rss.xml" tech)
+      '(("https://www.theatlantic.com/feed/all" news atlantic)
+        ("https://www.theguardian.com/uk/rss" news guardian)
+        ("https://www.ft.com/news-feed?format=rss" finance ft)
+        ("https://www.okmij.org/ftp/rss.xml" tech okmij)
+        ("https://www.thecipherbrief.com/feeds/feed.rss" new cpb)
+        ("https://lrb.co.uk/feeds/rss" books literature lrb)
         ))
 
 
