@@ -23,6 +23,7 @@
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
 
 (add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_03_04_2025/language_server.sh"))
+;; (add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/expert/apps/expert/burrito_out/expert_darwin_arm64"))
 
 (unless (package-installed-p 'exunit)
   (package-install 'exunit))
