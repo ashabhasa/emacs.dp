@@ -289,12 +289,16 @@ Version 2018-06-18 2021-09-30"
      (cdr (ring-ref avy-ring 0))))
   t)
 
+(defun avy-action-mark-to-char (pt)
+  (activate-mark)
+  (goto-char pt))
 
 (global-set-key (kbd "C-j") 'avy-goto-char-timer)
 (setq avy-timeout-seconds 1)
 (global-set-key (kbd "C-:") 'avy-goto-char)
 (global-set-key (kbd "M-g f") 'avy-goto-line)
 (global-set-key (kbd "M-g w") 'avy-goto-word-1)
+(setf (alist-get ?  avy-dispatch-alist) 'avy-action-mark-to-char)
 (setf (alist-get ?. avy-dispatch-alist) 'avy-action-embark)
 
 
