@@ -594,5 +594,29 @@ Version: 2020-11-01 2023-03-31 2023-08-25 2023-09-29"
 ;; Optional additional args
 (setq sqlformat-args '("-s2" "-g"))
 
+;; consult
+(global-set-key [remap projectile] 'consult-project-buffer)
+;; end consult
+;; open line below
+(defun arb-open-line-above (&optional arg)
+  "Open line above cursor and move cursor to it."
+  (interactive "*p")
+  (move-beginning-of-line nil)
+  (newline-and-indent arg)
+  (forward-line -1)
+  (indent-according-to-mode))
+
+(defun arb-open-line-below (&optional arg)
+  "Open line below cursor and move cursor to it."
+  (interactive "*p")
+  (move-end-of-line nil)
+  (newline arg)
+  (forward-line 0)
+  (indent-according-to-mode))
+
+(global-set-key (kbd "C-m") 'arb-open-line-below)
+(global-set-key (kbd "C-o") 'arb-open-line-below)
+(global-set-key (kbd "C-i") 'arb-open-line-above)
+
 (provide 'init-local)
  ;;; init-local.el ends here
