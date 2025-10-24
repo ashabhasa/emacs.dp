@@ -90,5 +90,31 @@ If TRACE runs tests with detailed reporting"
   (add-hook 'elixir-ts-mode-hook #'rainbow-delimiters-mode)
   )
 
+(use-package exunit
+  :ensure t
+  :config
+  ;; Default environment wrapper
+  (defun my/exunit-with-erl-flags (orig-fun &rest args)
+    "Run ExUnit with custom ERL_FLAGS for increased scheduler count"
+    (let ((process-environment (copy-sequence process-environment)))
+      (setenv "ERL_FLAGS" "-kernel +MIscs 2048")
+      (setenv "MIX_ENV" "test")
+      (message "Running tests with ERL_FLAGS=\"-kernel +MIscs 2048\" MIX_ENV=test")
+      (apply orig-fun args)))
+
+  (defun my/exunit-show-env-in-command (orig-fun &rest args)
+    "Prepend environment variables to the displayed command"
+    (let ((original-command (apply orig-fun args)))
+      (format "ERL_FLAGS=\"-kernel +MIscs 2048\" MIX_ENV=test %s"
+              original-command)))
+
+  ;; Apply to all exunit commands
+  (advice-add 'exunit-verify-all :around #'my/exunit-with-erl-flags)
+  (advice-add 'exunit-verify-single :around #'my/exunit-with-erl-flags)
+  (advice-add 'exunit-verify :around #'my/exunit-with-erl-flags)
+  (advice-add 'exunit-rerun :around #'my/exunit-with-erl-flags)
+  (advice-add 'exunit-build-command :around #'my/exunit-show-env-in-command)
+  )
+
 (provide 'init-elixir)
  ;;; init-elixir.el ends here
