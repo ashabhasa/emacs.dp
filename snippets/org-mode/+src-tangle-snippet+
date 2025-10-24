@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Source tangle
+# key: srct=
+# group: org-mode
+# --
+#+begin_src ${1:lang} :tangle ${2:file}
+  $0
+#+end_src
