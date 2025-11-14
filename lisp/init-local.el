@@ -468,6 +468,10 @@ Version 2018-06-18 2021-09-30"
 (global-set-key (kbd "C-m") 'arb-open-line-below)
 (global-set-key (kbd "C-o") 'arb-open-line-below)
 (global-set-key (kbd "C-i") 'arb-open-line-above)
+;; install define-word
+(package-install 'define-word)
+(global-set-key (kbd "M-#") 'define-word-at-point)
+
 ;; magit utilities
 (defun ash/merge-current-to-branch (target-branch)
   "Merge current branch into TARGET-BRANCH."
