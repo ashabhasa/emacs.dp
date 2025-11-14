@@ -617,6 +617,68 @@ Version: 2020-11-01 2023-03-31 2023-08-25 2023-09-29"
 (global-set-key (kbd "C-m") 'arb-open-line-below)
 (global-set-key (kbd "C-o") 'arb-open-line-below)
 (global-set-key (kbd "C-i") 'arb-open-line-above)
+;; magit utilities
+(defun ash/merge-current-to-branch (target-branch)
+  "Merge current branch into TARGET-BRANCH using exact git workflow with error handling."
+  (interactive (list (magit-read-branch "Target branch to merge into")))
+  (let ((current-branch (magit-get-current-branch)))
+    (when (string= current-branch target-branch)
+      (user-error "Cannot merge branch into itself"))
+    (condition-case err
+        (progn
+          ;; 1. git switch target-branch
+          (magit-checkout target-branch)
+          ;; 2. git remote update -p
+          (magit-fetch-all-prune)
+          ;; 3. git merge --ff-only @{u} (only if upstream exists)
+          (when (magit-get-upstream-branch)
+            (magit-run-git "merge" "--ff-only" "@{u}"))
+          ;; 4. git merge - (merge previous branch)
+          (magit-merge-plain current-branch)
+          ;; Check for conflicts
+          (if (magit-anything-unmerged-p)
+              (message "Merge conflicts detected in %s. Resolve conflicts and commit." target-branch)
+            (message "Successfully merged %s into %s" current-branch target-branch)))
+      (error
+       (message "Merge operation failed: %s" (error-message-string err))))))
+
+
+(defun ash/update-current-branch ()
+  "Update current branch to its upstream with error handling and messages."
+  (interactive)
+  (let ((current-branch (magit-get-current-branch))
+        (upstream-branch (magit-get-upstream-branch)))
+    (cond
+     ;; Check if we're in a repository
+     ((not (magit-toplevel))
+      (message "Not in a git repository"))
+     ;; Check if we have a current branch (not in detached HEAD)
+     ((not current-branch)
+      (message "Not on any branch (detached HEAD state)"))
+     ;; Check if upstream is configured
+     ((not upstream-branch)
+      (message "No upstream configured for branch '%s'. Set upstream first." current-branch))
+     ;; All checks passed, proceed with update
+     (t
+      (message "Updating %s to %s..." current-branch upstream-branch)
+      (condition-case err
+          (progn
+            ;; Fetch all remotes with prune
+            (magit-fetch-all-prune)
+            (message "Fetched from all remotes")
+            ;; Try fast-forward merge
+            (magit-run-git "merge" "--ff-only" "@{u}")
+            (message "Successfully updated %s to %s" current-branch upstream-branch))
+        ;; Handle specific error types
+        (magit-git-error
+         (message "Git error while updating %s: %s" current-branch (error-message-string err)))
+        (user-error
+         (message "Cannot fast-forward %s: branch has diverged from %s" current-branch upstream-branch))
+        (error
+         (message "Failed to update %s: %s" current-branch (error-message-string err))))))))
+
+(global-set-key (kbd "C-x v b u") #'ash/update-current-branch)
+(global-set-key (kbd "C-x v b m") #'ash/merge-current-to-branch)
 
 (provide 'init-local)
  ;;; init-local.el ends here
