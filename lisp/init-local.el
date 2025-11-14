@@ -470,7 +470,7 @@ Version 2018-06-18 2021-09-30"
 (global-set-key (kbd "C-i") 'arb-open-line-above)
 ;; magit utilities
 (defun ash/merge-current-to-branch (target-branch)
-  "Merge current branch into TARGET-BRANCH using exact git workflow with error handling."
+  "Merge current branch into TARGET-BRANCH."
   (interactive (list (magit-read-branch "Target branch to merge into")))
   (let ((current-branch (magit-get-current-branch)))
     (when (string= current-branch target-branch)
@@ -495,7 +495,7 @@ Version 2018-06-18 2021-09-30"
 
 
 (defun ash/update-current-branch ()
-  "Update current branch to its upstream with error handling and messages."
+  "Update current branch to its upstream."
   (interactive)
   (let ((current-branch (magit-get-current-branch))
         (upstream-branch (magit-get-upstream-branch)))
