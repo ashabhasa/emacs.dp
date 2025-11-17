@@ -484,7 +484,7 @@ Version 2018-06-18 2021-09-30"
           ;; 1. git switch target-branch
           (magit-checkout target-branch)
           ;; 2. git remote update -p
-          (magit-fetch-all-prune)
+          (magit-run-git "remote" "update" "-p")
           ;; 3. git merge --ff-only @{u} (only if upstream exists)
           (when (magit-get-upstream-branch)
             (magit-run-git "merge" "--ff-only" "@{u}"))
@@ -519,7 +519,7 @@ Version 2018-06-18 2021-09-30"
       (condition-case err
           (progn
             ;; Fetch all remotes with prune
-            (magit-fetch-all-prune)
+            (magit-run-git "remote" "update" "-p")
             (message "Fetched from all remotes")
             ;; Try fast-forward merge
             (magit-run-git "merge" "--ff-only" "@{u}")
