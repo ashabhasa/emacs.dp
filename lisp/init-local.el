@@ -15,23 +15,33 @@
 
 
 ;; on lg 27
-(set-face-attribute 'default nil :font "PragmataPro-13:antialias=true:hinting=true:autohint=false:hint=3")
+;; (set-face-attribute 'default nil :font "PragmataPro-13:antialias=true:hinting=true:autohint=false:hint=3")
+;; (set-face-attribute 'default nil :font "Aporetic Sans Mono-13:antialias=true:hinting=true:autohint=false:hint=3")
 
 ;; orginal mac book
 ;; (set-face-attribute 'default nil :font "PragmataPro-15:antialias=false:hinting=true:autohint=false:hint=3")
 
 ;; on Dell
-;; (set-face-attribute 'default nil
-;;                     :family "PragmataPro Mono Liga"
-;;                     :height 145
-;;                     :weight 'regular
-;;                     )
+(set-face-attribute 'default nil
+                    :family "Aporetic Sans Mono"
+                    :height 140
+                    :weight 'regular
+                    )
+(set-face-attribute 'default nil :font "Aporetic Sans Mono-14:antialias=true:hinting=true:autohint=false:hint=3")
 
 
+;; use modus operandi theme
+(package-install 'modus-themes)
+(package-install 'ef-themes)
 
+;; (initial-scratch-message nil)
+;; (color-theme-sanityinc-tomorrow-night)
+;; Disable all other themes to avoid awkward blending:
+(mapc #'disable-theme custom-enabled-themes)
 
-(color-theme-sanityinc-tomorrow-night)
-;; (set-face-attribute 'default nil :height 143)
+;; Load the theme of choice:
+;; (load-theme 'ef-day :no-confirm)
+(load-theme 'ef-winter :no-confirm)
 
 (global-set-key (kbd "M-w") 'easy-kill)
 
