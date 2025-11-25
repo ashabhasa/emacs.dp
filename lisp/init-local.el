@@ -468,16 +468,17 @@ Version 2018-06-18 2021-09-30"
   (indent-according-to-mode))
 
 (defun arb-open-line-below (&optional arg)
-  "Open line below cursor and move cursor to it."
+  "Open line below cursor and move cursor to it.  ARG is the optional argument."
   (interactive "*p")
   (move-end-of-line nil)
   (newline arg)
   (forward-line 0)
   (indent-according-to-mode))
 
-(global-set-key (kbd "C-m") 'arb-open-line-below)
-(global-set-key (kbd "C-o") 'arb-open-line-below)
-(global-set-key (kbd "C-i") 'arb-open-line-above)
+;; (global-set-key (kbd "C-m") 'arb-open-line-below)
+(global-set-key (kbd "C-o") 'arb-open-line-above)
+(global-set-key (kbd "C-i") 'arb-open-line-below)
+
 ;; install define-word
 (package-install 'define-word)
 (global-set-key (kbd "M-#") 'define-word-at-point)
