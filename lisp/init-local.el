@@ -458,9 +458,33 @@ Version 2018-06-18 2021-09-30"
 ;; consult
 (global-set-key [remap projectile] 'consult-project-buffer)
 ;; end consult
+
+
+;; gptel
+(use-package gptel
+  :ensure t
+  :config
+  (defun get-anthropic-key-from-keychain ()
+    "Retrieve  key from macOS keychain."
+    (let ((key (string-trim
+                (shell-command-to-string
+                 "security find-generic-password -a $USER -s anthropic-api-key-for-emacs -w 2>/dev/null"))))
+      (if (string-empty-p key)
+          (error "Could not retrieve Anthropic API key from keychain")
+        key)))
+  ;; OPTIONAL configuration
+  (setq gptel-api-key #'get-anthropic-key-from-keychain)
+  (setq
+   gptel-model 'claude-sonnet-4-20250514 ;  "claude-3-opus-20240229" also available
+   gptel-backend (gptel-make-anthropic "Claude" :stream t :key #'get-anthropic-key-from-keychain))
+  (global-set-key (kbd "C-c g g") 'gptel)           ; Open chat
+  (global-set-key (kbd "C-c g s") 'gptel-send)      ; Send region/buffer
+  (global-set-key (kbd "C-c g r") 'gptel-rewrite-and-replace) ; Replace selected code
+  )
+
 ;; open line below
 (defun arb-open-line-above (&optional arg)
-  "Open line above cursor and move cursor to it."
+  "Open line above cursor and move cursor to it.  ARG is the optional argument."
   (interactive "*p")
   (move-beginning-of-line nil)
   (newline-and-indent arg)
