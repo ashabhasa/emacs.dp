@@ -19,7 +19,7 @@
 ;; (set-face-attribute 'default nil :font "Aporetic Sans Mono-13:antialias=true:hinting=true:autohint=false:hint=3")
 
 ;; orginal mac book
-;; (set-face-attribute 'default nil :font "PragmataPro-15:antialias=false:hinting=true:autohint=false:hint=3")
+;; (set-face-attribute 'default nil :font "PragmataPro-16:antialias=false:hinting=true:autohint=false:hint=3")
 
 ;; on Dell
 (set-face-attribute 'default nil
@@ -27,7 +27,7 @@
                     :height 140
                     :weight 'regular
                     )
-(set-face-attribute 'default nil :font "Aporetic Sans Mono-14:antialias=true:hinting=true:autohint=false:hint=3")
+(set-face-attribute 'default nil :font "Aporetic Sans Mono-15:antialias=true:hinting=true:autohint=false:hint=3")
 
 
 ;; use modus operandi theme
@@ -392,6 +392,7 @@ Version 2018-06-18 2021-09-30"
         (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "typescript/src"))
         (yaml . ("https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0"))
         (php "https://github.com/tree-sitter/tree-sitter-php")
+        ;; (ocaml "https://github.com/tree-sitter/tree-sitter-ocaml")
         )
       )
 
@@ -475,7 +476,7 @@ Version 2018-06-18 2021-09-30"
   ;; OPTIONAL configuration
   (setq gptel-api-key #'get-anthropic-key-from-keychain)
   (setq
-   gptel-model 'claude-sonnet-4-20250514 ;  "claude-3-opus-20240229" also available
+   gptel-model 'claude-sonnet-4-5-20250929 ;  "claude-opus-4-5-20251101" also available
    gptel-backend (gptel-make-anthropic "Claude" :stream t :key #'get-anthropic-key-from-keychain))
   (global-set-key (kbd "C-c g g") 'gptel)           ; Open chat
   (global-set-key (kbd "C-c g s") 'gptel-send)      ; Send region/buffer
@@ -569,6 +570,55 @@ Version 2018-06-18 2021-09-30"
 
 (global-set-key (kbd "C-x v b u") #'ash/update-current-branch)
 (global-set-key (kbd "C-x v b m") #'ash/merge-current-to-branch)
+
+(defun ash/magit-checkout-previous-branch ()
+  "Check out the previous branch."
+  (interactive)
+  (magit-run-git "switch" "-"))
+
+;;; group related buffers to avoid creating many ones
+(add-to-list 'display-buffer-alist
+             `(,(rx (| "*xref*"
+                       "*grep*"
+                       "*Occur*"
+                       "*rg*"))
+               display-buffer-reuse-window
+               (inhibit-same-window . nil)))
+
+;;; configure mode line
+(use-package diminish
+  :ensure t
+  :config
+  (diminish 'emacs-lisp-mode "λ")  ; Replace with symbol
+  (diminish 'yas-minor-mode)
+  (diminish 'undo-tree-mode)
+  (diminish 'exunit-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'elixir-ts-mode)
+  (diminish 'elixir-mode)
+
+  ;; (diminish 'text-mode)
+  )           ; Hide completely
+
+;; hide major modes in mode line
+(setq-default mode-line-modes
+              (list " " 'mode-line-process 'minor-mode-alist))
+
+;;; customize the flymake mode line
+(setq flymake-mode-line-format
+      '("[" flymake-mode-line-error-counter
+        flymake-mode-line-warning-counter
+        flymake-mode-line-note-counter "]"))
+
+;;;Clean branch name with custom prefix
+(defun my/vc-git-mode-line-string (orig-fun &rest args)
+  "Show only branch name in mode line."
+  (let ((result (apply orig-fun args)))
+    (when result
+      (concat " " (replace-regexp-in-string "^Git[-:]" "" result)))))
+
+(advice-add 'vc-git-mode-line-string :around #'my/vc-git-mode-line-string)
+
 
 (provide 'init-local)
  ;;; init-local.el ends here
