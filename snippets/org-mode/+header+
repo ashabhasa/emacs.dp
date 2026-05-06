@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Insert document header
+# key: dochdr
+# --
+#+TITLE: ${1:Document Title}
+#+AUTHOR: ${2:`user-full-name`}
+#+DATE: ${3:`(format-time-string "%Y-%m-%d")`}
+#+DESCRIPTION: ${4:Brief description}
+
+$0
