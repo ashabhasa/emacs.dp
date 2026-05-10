@@ -393,6 +393,7 @@ Version 2018-06-18 2021-09-30"
         (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "typescript/src"))
         (yaml . ("https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0"))
         (php "https://github.com/tree-sitter/tree-sitter-php")
+        (nix . ("https://github.com/nix-community/tree-sitter-nix" "v0.3.0"))
         ;; (ocaml "https://github.com/tree-sitter/tree-sitter-ocaml")
         )
       )
