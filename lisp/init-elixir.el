@@ -19,12 +19,21 @@
   )
 
 ;; This is optional. It automatically runs `M-x eglot` for you whenever you are in `elixir-mode`
-;; (add-hook 'elixir-mode-hook 'eglot-ensure)
 (add-hook 'elixir-ts-mode-hook 'eglot-ensure)
 
-;; (add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_03_04_2025/language_server.sh"))
-(add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_09_10_2025/language_server.sh"))
-;; (add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/expert/expert_darwin_arm64"))
+;; (add-to-list 'eglot-server-programs '(elixir-ts-mode  "~/dev/elixir/elixir-ls-gh/release_07_04_2026/language_server.sh"))
+
+(with-eval-after-load 'eglot
+  (setf (alist-get '(elixir-mode elixir-ts-mode heex-ts-mode)
+                   eglot-server-programs
+                   nil nil #'equal)
+        (eglot-alternatives
+         '(("~/dev/elixir/expert/apps/expert/_build/prod/rel/plain/bin/start_expert" "--stdio")))))
+
+;; remap % as a punctuation
+(add-hook 'elixir-ts-mode-hook
+          (lambda ()
+            (modify-syntax-entry ?% "." (syntax-table))))
 
 (unless (package-installed-p 'exunit)
   (package-install 'exunit))
@@ -34,7 +43,6 @@
 
 ;; (when (maybe-require-package 'exunit)
 ;; (add-hook 'elixir-mode-hook 'exunit-mode))
-
 
 ;; use tree sitter
 (setq major-mode-remap-alist
@@ -82,12 +90,7 @@ If TRACE runs tests with detailed reporting"
   (define-key elixir-ts-mode-map (kbd "C-c h") 'mark-defun)
   (define-key elixir-ts-mode-map (kbd "M-a") 'treesit-beginning-of-defun)
   (define-key elixir-ts-mode-map (kbd "M-e") 'treesit-end-of-defun)
-  ;; use dumb-jump for elixir
-  ;; (add-to-list 'eglot-stay-out-of 'xref)
-  ;; (when (maybe-require-package 'dumb-jump)
-  ;;   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-  ;;   (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
-  ;;   (setq dumb-jump-force-searcher 'rg))
+  (define-key eglot-mode-map (kbd "C-c i") 'consult-eglot-symbols)
   (add-hook 'elixir-ts-mode-hook #'rainbow-delimiters-mode)
   )
 
