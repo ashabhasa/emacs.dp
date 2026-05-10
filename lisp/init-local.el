@@ -622,5 +622,9 @@ Version 2018-06-18 2021-09-30"
 (advice-add 'vc-git-mode-line-string :around #'my/vc-git-mode-line-string)
 
 
+(add-to-list 'eglot-server-programs
+             '((python-mode python-ts-mode) . ("basedpyright-langserver" "--stdio")))
+(add-hook 'python-mode-hook 'eglot-ensure)
+(add-hook 'python-ts-mode-hook 'eglot-ensure)
 (provide 'init-local)
  ;;; init-local.el ends here
