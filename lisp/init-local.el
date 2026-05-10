@@ -477,7 +477,7 @@ Version 2018-06-18 2021-09-30"
   ;; OPTIONAL configuration
   (setq gptel-api-key #'get-anthropic-key-from-keychain)
   (setq
-   gptel-model 'claude-sonnet-4-5-20250929 ;  "claude-opus-4-5-20251101" also available
+   gptel-model 'claude-sonnet-4-6 ;'claude-sonnet-4-5-20250929 ;  "claude-opus-4-5-20251101" also available
    gptel-backend (gptel-make-anthropic "Claude" :stream t :key #'get-anthropic-key-from-keychain))
   (global-set-key (kbd "C-c g g") 'gptel)           ; Open chat
   (global-set-key (kbd "C-c g s") 'gptel-send)      ; Send region/buffer
