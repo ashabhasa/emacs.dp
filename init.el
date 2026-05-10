@@ -150,6 +150,7 @@
 
 
 (require 'init-ledger)
+(require 'init-go)
 (require 'init-lua)
 (require 'init-uiua)
 (require 'init-zig)
