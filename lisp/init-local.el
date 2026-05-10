@@ -626,5 +626,19 @@ Version 2018-06-18 2021-09-30"
              '((python-mode python-ts-mode) . ("basedpyright-langserver" "--stdio")))
 (add-hook 'python-mode-hook 'eglot-ensure)
 (add-hook 'python-ts-mode-hook 'eglot-ensure)
+
+
+(defun elixir-atom-keys-to-string-keys (start end)
+  "Convert Elixir map atom keys to string keys in region."
+  (interactive "r")
+  (save-excursion
+    (goto-char start)
+    (while (re-search-forward "\\([a-z_][a-zA-Z0-9_]*\\):" end t)
+      (unless (nth 3 (syntax-ppss))  ; Skip if inside string
+        (replace-match "\"\\1\" =>" nil nil)))))
+
+(with-eval-after-load 'elixir-mode
+  (define-key elixir-ts-mode-map (kbd "C-c C-k") #'elixir-atom-keys-to-string-keys))
+
 (provide 'init-local)
  ;;; init-local.el ends here
