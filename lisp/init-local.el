@@ -24,10 +24,11 @@
 ;; on Dell
 (set-face-attribute 'default nil
                     :family "Aporetic Sans Mono"
-                    :height 140
+                    :height 150
                     :weight 'regular
                     )
-(set-face-attribute 'default nil :font "Aporetic Sans Mono-15:antialias=true:hinting=true:autohint=false:hint=3")
+;; (set-face-attribute 'default nil :font "Aporetic Sans Mono-17:antialias=true:hinting=true:autohint=false:hint=3")
+(set-face-attribute 'default nil :font "Aporetic Sans Mono-16:antialias=true:hinting=true:autohint=false:hint=3")
 
 
 ;; use modus operandi theme
