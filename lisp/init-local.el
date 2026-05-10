@@ -656,5 +656,7 @@ Version 2018-06-18 2021-09-30"
 
 (require 'gptel-integrations)
 
+;; sort branches in magit by creatordate
+(setq magit-list-refs-sortby "-creatordate")
 (provide 'init-local)
  ;;; init-local.el ends here
