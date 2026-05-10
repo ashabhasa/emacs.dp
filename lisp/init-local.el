@@ -640,5 +640,21 @@ Version 2018-06-18 2021-09-30"
 (with-eval-after-load 'elixir-mode
   (define-key elixir-ts-mode-map (kbd "C-c C-k") #'elixir-atom-keys-to-string-keys))
 
+;;; add project to gptel
+(defun my/gptel-add-project ()
+  "Add all relevant files from current project to gptel context."
+  (interactive)
+  (when-let ((project-root (project-root (project-current))))
+    (gptel-add-dir project-root)))
+
+;; Bind it
+(with-eval-after-load 'gptel
+  (define-key gptel-mode-map (kbd "C-c g p") #'my/gptel-add-project))
+;; After rewrite completes: show Accept/Reject/Diff/Merge menu
+(after! gptel-rewrite
+        (setq gptel-rewrite-default-action 'dispatch))
+
+(require 'gptel-integrations)
+
 (provide 'init-local)
  ;;; init-local.el ends here
