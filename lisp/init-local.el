@@ -498,6 +498,25 @@ Version 2018-06-18 2021-09-30"
   (global-set-key (kbd "C-c g r") 'gptel-rewrite-and-replace) ; Replace selected code
   )
 
+;; gptel tools
+(use-package gptel-agent
+  :vc ( :url "https://github.com/karthink/gptel-agent"
+        :rev :newest)
+  :config (gptel-agent-update))
+
+;; claude code configuration
+;; this is an alternative to gptel
+
+(use-package vterm
+  :ensure t)
+
+(use-package claude-code-ide
+  :vc (:url "https://github.com/manzaltu/claude-code-ide.el" :rev :newest)
+  :bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
+  :config
+  (setq claude-code-ide-terminal-backend 'vterm)
+  (claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
+
 ;; open line below
 (defun arb-open-line-above (&optional arg)
   "Open line above cursor and move cursor to it.  ARG is the optional argument."
@@ -666,6 +685,8 @@ Version 2018-06-18 2021-09-30"
 ;; After rewrite completes: show Accept/Reject/Diff/Merge menu
 (after! gptel-rewrite
         (setq gptel-rewrite-default-action 'dispatch))
+(with-eval-after-load 'gptel-rewrite
+  (setq gptel-rewrite-default-action 'dispatch))
 
 (require 'gptel-integrations)
 
