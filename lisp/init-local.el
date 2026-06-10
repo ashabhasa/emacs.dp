@@ -426,23 +426,34 @@ Version 2018-06-18 2021-09-30"
   (setq eshell-highlight-prompt nil
         eshell-prompt-function 'epe-theme-lambda))
 
+;; elfeed for feeds
 (unless (package-installed-p 'el-feed)
   (package-install 'elfeed))
 
 (setq elfeed-feeds
       '(("https://www.theatlantic.com/feed/all" news atlantic)
-        ("https://www.theguardian.com/uk/rss" news guardian)
-        ("https://www.ft.com/news-feed?format=rss" finance ft)
+        ("https://www.ft.com/news-feed?format=rss" news finance ft)
         ("https://www.okmij.org/ftp/rss.xml" tech okmij)
-        ("https://www.thecipherbrief.com/feeds/feed.rss" new cpb)
+        ("https://www.thecipherbrief.com/feeds/feed.rss" news cpb)
         ("https://lrb.co.uk/feeds/rss" books literature lrb)
+        ("https://eugeneyan.com/rss/" tech ai)
+        ("http://steve-yegge.blogspot.com/atom.xml" tech programming)
+        ("https://nullprogram.com/feed/" tech programming)
+        ("https://www.theguardian.com/uk/rss" news guardian junk)
+        ("https://openai.com/news/rss.xml" ai openai)
+        ("https://mccormickml.com/atom.xml" ai)
         ))
 
+;; end elfeed
 
+;; Undo tree
 (when (maybe-require-package 'undo-tree)
   (global-undo-tree-mode)
   (setq undo-tree-auto-save-history nil))
 
+;; end undo tree
+
+;; use nerd icons
 (use-package nerd-icons
   :ensure t)
 
@@ -452,6 +463,8 @@ Version 2018-06-18 2021-09-30"
   :ensure t
   :hook
   (dired-mode . nerd-icons-dired-mode))
+;; end nerd icons
+
 
 ;; sql formatter
 (setq sqlformat-command 'pgformatter)
