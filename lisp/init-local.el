@@ -1,4 +1,4 @@
-;;; init-local.el --- Load custom modification
+;;; init-local.el --- Load custom modification  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 ;;; Fonts setup:

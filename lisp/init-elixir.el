@@ -1,4 +1,4 @@
-;;; init-elixir.el --- Support for the Elixir language
+;;; init-elixir.el --- Support for the Elixir language  -*- lexical-binding: t; -*-
  ;;; Commentary:
  ;;; Code:
 
